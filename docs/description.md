@@ -27,7 +27,7 @@ it.
 
 **Window**
 
-- Taskbar flash when the game finishes loading, or when a server disconnects you while you are in another window
+- Taskbar flash while the game is in the background: when it finishes loading, or when a server disconnects you
 - Initial window size and starting maximized
 - Remember the window size, position and maximized state between starts. A window from a monitor that is no longer
   connected is moved back to the main monitor.

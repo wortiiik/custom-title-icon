@@ -1,1 +1,1 @@
-Set the window title, window icon, Windows title bar colors and window size from one config file. Titles per game state with variables like pack version, world or server name. Client only.
+Set the window title, icon, title bar colors and window size from one config file. Separate titles for menus, singleplayer and multiplayer, with pack version, world or server name. Client-side.

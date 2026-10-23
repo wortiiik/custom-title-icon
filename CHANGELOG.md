@@ -1,5 +1,9 @@
 # Changelog
 
+## Unreleased
+
+- The mod logo is shown in the mod list.
+
 ## 1.0.0
 
 First release, for Minecraft 1.21.1 and NeoForge 21.1.264 or newer. Client only.
