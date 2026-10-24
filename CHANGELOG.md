@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## 1.0.2 - 2026-10-24
 
 - The saved window size and position (`window-state.json`) moved from `config/customtitleicon/` to
   `customtitleicon/` in the game folder, so it no longer ends up in modpack exports together with the config.
