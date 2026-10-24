@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## 1.0.1 - 2026-10-24
 
 - The mod logo is shown in the mod list.
 
