@@ -160,7 +160,7 @@ public final class ClientConfig {
         rememberSize = builder
                 .comment(
                         "Remember the window size, position and maximized state between starts.",
-                        "Saved in customtitleicon/window-state.json in the config folder.")
+                        "Saved in customtitleicon/window-state.json in the game folder, next to the config and mods folders.")
                 .translation(translationKey(WINDOW, REMEMBER_SIZE))
                 .define(REMEMBER_SIZE, false);
         builder.pop();

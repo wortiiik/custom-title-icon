@@ -1,12 +1,9 @@
 package io.github.wortiiik.customtitleicon.window;
 
 import com.mojang.logging.LogUtils;
+import io.github.wortiiik.customtitleicon.CustomTitleIcon;
 import io.github.wortiiik.customtitleicon.config.ClientConfig;
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.NoSuchFileException;
-import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -18,7 +15,7 @@ import org.slf4j.Logger;
 public final class GameWindow {
 
     private static final Logger LOGGER = LogUtils.getLogger();
-    private static final String STATE_FILE = "window-state.json";
+    private static final String STATE_FILE_NAME = "window-state.json";
     private static final WindowStateTracker TRACKER = new WindowStateTracker();
 
     private static boolean maximizeAtStartup;
@@ -28,7 +25,9 @@ public final class GameWindow {
 
     public static Optional<Bounds> placeAtStartup(long window, WindowSettings settings, Bounds current) {
         try {
-            Optional<WindowState> saved = settings.rememberSize() ? readState() : Optional.empty();
+            WindowStateFile stateFile = stateFile();
+            moveLegacyStateFile(stateFile);
+            Optional<WindowState> saved = settings.rememberSize() ? readState(stateFile) : Optional.empty();
             Frame frame = Frame.of(window);
             List<Bounds> workAreas = workAreas().stream().map(frame::clientArea).toList();
             Bounds primary = primaryWorkArea().map(frame::clientArea).orElse(current);
@@ -60,34 +59,43 @@ public final class GameWindow {
 
     public static void saveState() {
         TRACKER.current().ifPresent(state -> {
-            Path file = stateFile();
+            WindowStateFile stateFile = stateFile();
             try {
-                Files.createDirectories(file.getParent());
-                Files.writeString(file, state.toJson(), StandardCharsets.UTF_8);
+                stateFile.write(state);
             } catch (IOException e) {
-                LOGGER.warn("Could not save the window size to {}", file, e);
+                LOGGER.warn("Could not save the window size to {}", stateFile.file(), e);
             }
         });
     }
 
-    private static Optional<WindowState> readState() {
-        Path file = stateFile();
+    private static void moveLegacyStateFile(WindowStateFile stateFile) {
         try {
-            Optional<WindowState> state = WindowState.fromJson(Files.readString(file, StandardCharsets.UTF_8));
-            if (state.isEmpty()) {
-                LOGGER.warn("Ignoring {}, it does not contain a valid window size", file);
+            if (stateFile.moveLegacyFile()) {
+                LOGGER.info("Moved the saved window size from {} to {}", stateFile.legacyFile(), stateFile.file());
+            }
+        } catch (IOException e) {
+            LOGGER.warn("Could not move the saved window size from {} to {}", stateFile.legacyFile(), stateFile.file(), e);
+        }
+    }
+
+    private static Optional<WindowState> readState(WindowStateFile stateFile) {
+        try {
+            Optional<String> json = stateFile.read();
+            Optional<WindowState> state = json.flatMap(WindowState::fromJson);
+            if (json.isPresent() && state.isEmpty()) {
+                LOGGER.warn("Ignoring {}, it does not contain a valid window size", stateFile.file());
             }
             return state;
-        } catch (NoSuchFileException e) {
-            return Optional.empty();
         } catch (IOException e) {
-            LOGGER.warn("Could not read the saved window size from {}", file, e);
+            LOGGER.warn("Could not read the saved window size from {}", stateFile.file(), e);
             return Optional.empty();
         }
     }
 
-    private static Path stateFile() {
-        return FMLPaths.CONFIGDIR.get().resolve(ClientConfig.ICON_FOLDER).resolve(STATE_FILE);
+    private static WindowStateFile stateFile() {
+        return new WindowStateFile(
+                FMLPaths.GAMEDIR.get().resolve(CustomTitleIcon.MOD_ID).resolve(STATE_FILE_NAME),
+                FMLPaths.CONFIGDIR.get().resolve(ClientConfig.ICON_FOLDER).resolve(STATE_FILE_NAME));
     }
 
     private static Optional<Bounds> primaryWorkArea() {

@@ -133,9 +133,10 @@ These settings take effect at the next start.
 - `initial_width` and `initial_height` set the window size, centered on the main monitor. 0 keeps the default size.
 - `start_maximized` starts the game with a maximized window.
 - `remember_size` saves the window size, position and maximized state when the game closes and restores them at the
-  next start. The state is saved in `config/customtitleicon/window-state.json`, so the config file does not change on
-  every start. While a saved state exists, it is used instead of `initial_width`, `initial_height` and
-  `start_maximized`.
+  next start. The state is saved in `customtitleicon/window-state.json` in the game folder, next to the `config` and
+  `mods` folders, so the config file does not change on every start. While a saved state exists, it is used instead
+  of `initial_width`, `initial_height` and `start_maximized`. A state file left in `config/customtitleicon/` by
+  version 1.0.1 or older is moved there on the next start.
 
 A saved window is moved back onto a monitor if the monitor it was on is no longer connected, and made smaller if it
 does not fit. When fullscreen is on in the video settings, the game starts in fullscreen and these settings are not
@@ -160,6 +161,9 @@ tested on Windows 11.
 ## For modpack authors
 
 - Ship `config/customtitleicon-client.toml` and the `config/customtitleicon/` folder with your icon in the pack.
+- Do not include the `customtitleicon/` folder from the game folder in the pack export. It holds your own window
+  size and position (`window-state.json`), which players should not get. With version 1.0.1 or older the file was in
+  `config/customtitleicon/`; remove it from that folder before exporting.
 - Keep `remember_size` on if players should keep their own window size, or off if every start should use
   `initial_width` and `initial_height`.
 - Ship `config/fml.toml` with the NeoForge loading window set to the same size as `initial_width` and

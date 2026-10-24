@@ -46,5 +46,5 @@
   "customtitleicon.configuration.window.start_maximized": "Spustit maximalizované",
   "customtitleicon.configuration.window.start_maximized.tooltip": "Spustí hru v maximalizovaném okně, když se nepoužije uložená velikost.",
   "customtitleicon.configuration.window.remember_size": "Pamatovat si velikost a pozici",
-  "customtitleicon.configuration.window.remember_size.tooltip": "Pamatuje si mezi spuštěními velikost, pozici a maximalizaci okna.\nUkládá se do customtitleicon/window-state.json ve složce config."
+  "customtitleicon.configuration.window.remember_size.tooltip": "Pamatuje si mezi spuštěními velikost, pozici a maximalizaci okna.\nUkládá se do customtitleicon/window-state.json ve složce hry, vedle složek config a mods."
 }

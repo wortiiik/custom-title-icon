@@ -46,5 +46,5 @@
   "customtitleicon.configuration.window.start_maximized": "Start Maximized",
   "customtitleicon.configuration.window.start_maximized.tooltip": "Start with a maximized window when no saved size is used.",
   "customtitleicon.configuration.window.remember_size": "Remember Size and Position",
-  "customtitleicon.configuration.window.remember_size.tooltip": "Remember the window size, position and maximized state between starts.\nSaved in customtitleicon/window-state.json in the config folder."
+  "customtitleicon.configuration.window.remember_size.tooltip": "Remember the window size, position and maximized state between starts.\nSaved in customtitleicon/window-state.json in the game folder, next to the config and mods folders."
 }

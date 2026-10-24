@@ -1,5 +1,12 @@
 # Changelog
 
+## Unreleased
+
+- The saved window size and position (`window-state.json`) moved from `config/customtitleicon/` to
+  `customtitleicon/` in the game folder, so it no longer ends up in modpack exports together with the config.
+- An existing file in `config/customtitleicon/` is moved to the new place on the next start. If the new place already
+  has one, that one is kept and the old file is deleted.
+
 ## 1.0.1 - 2026-10-24
 
 - The mod logo is shown in the mod list.
